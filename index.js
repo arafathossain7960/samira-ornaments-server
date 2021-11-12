@@ -106,11 +106,30 @@ async function run(){
         app.put('/updateStatus/:id', async(req, res)=>{
             const doc="Approve";
             const id=req.params.id;
+           
             const filter={_id:ObjectId(id)};
             const result = await orders.updateOne(filter,{$set:{status:doc}});
-            console.log(result)
-            
+           res.json(result)
+           
+        });
+
+        // PUT API make Admin 
+        app.put('/makeAdmin', async(req, res)=>{
+            const email= req.body.email;
+            const role=req.body.role;
+            const filter={email:email}
+            const result =await users.updateOne(filter,{ $set:
+                {role:role}
+            })
+            res.json(result);
+        });
+
+        // GET API get reviews from the database
+        app.get('/reviews', async(req, res)=>{
+            const result= await reviews.find({}).toArray();
+            res.json(result) 
         })
+        
 
        
         
