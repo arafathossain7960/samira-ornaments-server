@@ -40,16 +40,16 @@ async function run(){
         });
         // POST API on user collection
         app.post('/users', async(req, res)=>{
-            console.log(req.body)
             const result = await users.insertOne(req.body)
             res.json(result);
+            console.log(result)
         });
 
         // POS API add new ornament
         app.post('/addCollection', async(req, res)=>{
             const result = await ornaments.insertOne(req.body);
             res.json(result);
-            console.log(result)
+          
         });
         
         // POST API to add order on the database
@@ -128,7 +128,16 @@ async function run(){
         app.get('/reviews', async(req, res)=>{
             const result= await reviews.find({}).toArray();
             res.json(result) 
+        });
+        
+        // GET API get users from the database
+        app.get('/users/:email', async(req, res)=>{
+        const email= req.params.email;
+        const result = await users.findOne({email:email});
+        res.json(result);
+        console.log(result)
         })
+
         
 
        
