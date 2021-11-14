@@ -141,7 +141,7 @@ async function run(){
             const email=req.params.email;
             const result = await users.findOne({email:email}); 
             let isAdmin = false;
-            if(result?.role){
+            if(result?.role==='admin'){
                 isAdmin= true
             }else{
                 isAdmin=false
