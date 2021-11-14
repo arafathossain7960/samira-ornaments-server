@@ -42,7 +42,7 @@ async function run(){
         app.post('/users', async(req, res)=>{
             const result = await users.insertOne(req.body)
             res.json(result);
-            console.log(result)
+            
         });
 
         // POS API add new ornament
@@ -57,7 +57,7 @@ async function run(){
            
             const result = await orders.insertOne(req.body);
             res.json(result);
-            console.log(result);
+            
         });
 
         // GET API find all orders from the database
@@ -131,12 +131,24 @@ async function run(){
         });
         
         // GET API get users from the database
+        // app.get('/users/:email', async(req, res)=>{
+        // const email= req.params.email;
+        // console.log(email)
+        // const result = await users.findOne({email:email});
+        // res.json(result);
+        // })
         app.get('/users/:email', async(req, res)=>{
-        const email= req.params.email;
-        const result = await users.findOne({email:email});
-        res.json(result);
-        console.log(result)
-        })
+            const email=req.params.email;
+            const result = await users.findOne({email:email}); 
+            let isAdmin = false;
+            if(result?.role){
+                isAdmin= true
+            }else{
+                isAdmin=false
+            }
+            res.json(isAdmin)
+            console.log(result)
+        });
 
         
 
